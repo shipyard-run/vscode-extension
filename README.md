@@ -1,6 +1,6 @@
 # shipyard README
 
-This is the README for your extension "shipyard". After writing up a brief description, we recommend including the following sections.
+VSCode Extension for Shipyard
 
 ## Features
 
