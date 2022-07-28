@@ -1,0 +1,12 @@
+{
+  "tabs": [
+    {"uri": "file:///c%3A/Users/jacks/code/src/github.com/shipyard-run/save-restore-editors/src/extension.ts"},
+    {"uri": "https://www.shipyard.run", "title": "Shipyard"},
+    {"uri": "https://www.shipyard.run/docs/install", "title": "Docs"},
+    {"uri": "http://localhost:8080", "title": "Consul Thing"}
+  ],
+  "terminals": [
+    {"name": "Terminal 1", "command": "docker ps", "viewColumn": 1},
+    {"name": "Terminal 2", "command": "ls -la", "viewColumn": 1}
+  ]
+}
