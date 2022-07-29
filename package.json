@@ -3,7 +3,8 @@
   "displayName": "shipyard",
   "description": "VSCode Extension for Shipyard",
   "publisher": "Shipyard",
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "repository": "https://github.com/shipyard-run/vscode-extension.git",
   "engines": {
     "vscode": "^1.69.0"
   },

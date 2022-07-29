@@ -87,18 +87,22 @@ async function openFile(uri: string) {
   const docURI = vscode.Uri.file(filePath);
 
   const files = await vscode.workspace.textDocuments.filter(doc => doc.fileName === docURI.fsPath);
+
+  if (files.length === 0) {
+    console.log("openFile: " + filePath);
+    // no active file, open it and return
+    const doc = await vscode.workspace.openTextDocument(docURI);
+    await vscode.window.showTextDocument(doc, options);
+    return;
+  }
+
+  // if we have the window open and it is not active just show it
   for await (const doc of files){
-    console.log("closing", doc.fileName);
     if(vscode.window.activeTextEditor?.document.fileName !== doc.fileName){
-      await vscode.window.showTextDocument(doc, options); // fails if active editor
+      console.log("openFile: " + filePath);
+      vscode.window.showTextDocument(doc, options).then((editor) => {}).then(undefined, err => {});
     }
-
-    await vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-  };
-
-
-  const doc = await vscode.workspace.openTextDocument(docURI);
-  await vscode.window.showTextDocument(doc, options);
+  }
 }
 
 async function openTerminal(command: string, name: string) {
@@ -247,7 +251,7 @@ async function openHtml(uri: string, title: string) {
       <body>
           <ul>
             <li><div>${uri}</div></li>
-            <li style="float:right"><a class="active" href="#" onclick="reloadIFrame()">Reload</a></li>
+            <li style="float:right"><a class="active" href="#" onclick="reloadIFrame()">&#x27F3</a></li>
           </ul>
           <iframe width="100%" height="100%" src="${uri}" frameborder="0" id="content"></iframe>
       </body>
