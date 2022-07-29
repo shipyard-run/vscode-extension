@@ -102,18 +102,18 @@ async function openFile(uri: string) {
 }
 
 async function openTerminal(command: string, name: string) {
-  vscode.window.terminals.forEach((terminal) => {
-    // if the terminal is open close it
-    if (terminal.name === name) {
-      terminal.dispose();
-    }
-  });
+  // if we have a terminal with the same name, grab it
+  let term: vscode.Terminal | undefined = vscode.window.terminals.find((term) => term.name === name);
 
-  const term: vscode.Terminal = vscode.window.createTerminal(name);
-  term.show();
+  // if not create a new one
+  if (term === undefined) {
+    term = vscode.window.createTerminal(name);
+  }
+
+  term?.show();
 
   if (command !== '') {
-    term.sendText(command);
+    term?.sendText(command);
   }
 }
 
@@ -155,6 +155,41 @@ async function openHtml(uri: string, title: string) {
               padding: 0;
               margin: 0;
               height: 100%;
+            }
+
+            ul {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              background-color: #333;
+            }
+            
+            li {
+              float: left;
+            }
+
+            li div {
+              display: block;
+              color: white;
+              font-size: 16px;
+              text-align: center;
+              padding: 14px 16px;
+              text-decoration: none;
+            }
+            
+            li a {
+              font-size: 16px;
+              display: block;
+              color: white;
+              text-align: center;
+              padding: 14px 16px;
+              text-decoration: none;
+            }
+            
+            /* Change the link color to #111 (black) on hover */
+            li a:hover {
+              background-color: #111;
             }
           </style>
           <script>
@@ -203,10 +238,18 @@ async function openHtml(uri: string, title: string) {
             else {
               window.attachEvent("onmessage", displayMessage);
             }
+
+            function reloadIFrame() {
+              document.getElementById('content').src = document.getElementById('content').src
+            }
           </script>
       </head>
       <body>
-          <iframe width="100%" height="100%" src="${uri}" frameborder="0"></iframe>
+          <ul>
+            <li><div>${uri}</div></li>
+            <li style="float:right"><a class="active" href="#" onclick="reloadIFrame()">Reload</a></li>
+          </ul>
+          <iframe width="100%" height="100%" src="${uri}" frameborder="0" id="content"></iframe>
       </body>
       </html>`;
   panel.webview.onDidReceiveMessage(

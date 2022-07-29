@@ -2,6 +2,7 @@
   "name": "shipyard",
   "displayName": "shipyard",
   "description": "VSCode Extension for Shipyard",
+  "publisher": "Shipyard",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.69.0"
